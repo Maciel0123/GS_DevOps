@@ -1,5 +1,6 @@
 package com.clima.gs.gs.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -40,5 +41,11 @@ public class HistoricoPesquisa {
 
     @Column(name = "data_pesquisa")
     private LocalDateTime dataPesquisa;
-}
 
+    @Column(name = "lat_api", precision = 10, scale = 6)
+    private BigDecimal latApi;
+
+    @Column(name = "lon_api", precision = 10, scale = 6)
+    private BigDecimal lonApi;
+
+}

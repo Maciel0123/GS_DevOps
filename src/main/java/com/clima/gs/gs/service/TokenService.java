@@ -17,14 +17,12 @@ public class TokenService {
     private Instant experiesAt = LocalDateTime.now().plusMinutes(120).toInstant(ZoneOffset.ofHours(-3));
     private Algorithm algorithm = Algorithm.HMAC256("secret-muito-secreto-que-ninguem-pode-saber");
 
-    public Token createToken(User user) {
-        var jwt = JWT.create()
+    public String generateJwt(User user) {
+        return JWT.create()
                 .withSubject(user.getIdUser().toString())
                 .withClaim("email", user.getEmail())
                 .withExpiresAt(experiesAt)
                 .sign(algorithm);
-
-        return new Token(jwt, "Bearer", user.getEmail());
     }
 
     public User getUserFromToken(String jwt) {

@@ -8,6 +8,7 @@ import com.clima.gs.gs.repository.HistoricoPesquisaRepository;
 import com.clima.gs.gs.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -26,42 +27,51 @@ public class DadosController {
     @Autowired
     private HistoricoPesquisaRepository historicoRepository;
 
-   @GetMapping
-public Page<Dados> listarComFiltros(
-        @RequestParam(required = false) String cidade,
-        @RequestParam(required = false) Long idUsuario,
-        Pageable pageable) {
+    @GetMapping
+    public List<Dados> listarComFiltros(
+            @RequestParam(required = false) String cidade,
+            @RequestParam(required = false) Long idUsuario) {
 
-    Dados filtro = new Dados();
+        Dados filtro = new Dados();
 
-    if (cidade != null && !cidade.isBlank()) {
-        filtro.setCidade(cidade.trim());
+        if (cidade != null && !cidade.isBlank()) {
+            filtro.setCidade(cidade.trim());
 
-        if (idUsuario != null) {
-            User usuario = userRepository.findById(idUsuario)
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            if (idUsuario != null) {
+                User usuario = userRepository.findById(idUsuario)
+                        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-            boolean jaPesquisada = historicoRepository.existsByUsuarioAndCidadeIgnoreCase(usuario, cidade);
+                boolean jaPesquisada = historicoRepository.existsByUsuarioAndCidadeIgnoreCase(usuario, cidade);
 
-            if (!jaPesquisada && cidade.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
-                HistoricoPesquisa historico = HistoricoPesquisa.builder()
-                        .usuario(usuario)
-                        .cidade(cidade.trim())
-                        .dataPesquisa(LocalDateTime.now())
-                        .build();
-                historicoRepository.save(historico);
+                if (!jaPesquisada && cidade.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
+                    // Busca lat/lon mockado da cidade
+                    var dadosMock = dadosRepository
+                            .findFirstByCidadeIgnoreCaseOrderByDataColetaDesc(cidade.trim())
+                            .orElse(null);
+
+                    HistoricoPesquisa historico = HistoricoPesquisa.builder()
+                            .usuario(usuario)
+                            .cidade(cidade.trim())
+                            .dataPesquisa(LocalDateTime.now())
+                            .latApi(dadosMock != null ? dadosMock.getLatApi() : null)
+                            .lonApi(dadosMock != null ? dadosMock.getLonApi() : null)
+
+                            .build();
+
+                    historicoRepository.save(historico);
+
+                }
             }
         }
+
+        ExampleMatcher matcher = ExampleMatcher.matchingAll()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Dados> example = Example.of(filtro, matcher);
+
+        return dadosRepository.findAll(example);
     }
-
-    ExampleMatcher matcher = ExampleMatcher.matchingAll()
-            .withIgnoreNullValues()
-            .withIgnoreCase()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-
-    Example<Dados> example = Example.of(filtro, matcher);
-
-    return dadosRepository.findAll(example, pageable);
-}
 
 }

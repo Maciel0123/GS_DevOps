@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import  com.clima.gs.gs.model.Token;
-import  com.clima.gs.gs.model.User;
-import  com.clima.gs.gs.service.AuthService;
-import  com.clima.gs.gs.service.TokenService;
-
+import com.clima.gs.gs.dto.AuthResponseDTO;
+import com.clima.gs.gs.model.Token;
+import com.clima.gs.gs.model.User;
+import com.clima.gs.gs.service.AuthService;
+import com.clima.gs.gs.service.TokenService;
 
 @RestController
 public class AuthController {
@@ -26,13 +26,23 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public Token login(@RequestBody Credentials credentials){ 
-        var user = authService.loadUserByUsername(credentials.email());
-        if (!passwordEncoder.matches(credentials.password(), user.getPassword())){
+    public AuthResponseDTO login(@RequestBody Credentials credentials) {
+        var userDetails = authService.loadUserByUsername(credentials.email());
+
+        if (!passwordEncoder.matches(credentials.password(), userDetails.getPassword())) {
             throw new BadCredentialsException("Senha incorreta");
         }
-        
-        return tokenService.createToken((User) user);
+
+        var user = (User) userDetails;
+
+        String jwt = tokenService.generateJwt(user);
+
+        return new AuthResponseDTO(
+                jwt,
+                "Bearer",
+                user.getIdUser(),
+                user.getNomeUser(),
+                user.getEmail());
     }
-    
+
 }
