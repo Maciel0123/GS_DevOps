@@ -121,15 +121,30 @@ DB_USERNAME=RM******
 DB_PASSWORD=******
 ```
 
-2. **rode a aplicação**
-Crie um arquivo .env com suas variáveis de ambiente
+2. **.env**
+Crie um arquivo .env na raiz do projeto com as informações do banco de dados:
 
 ```bash
-https://github.com/MaryChriss/gs_java1.git
-cd gs_java1
+DB_URL=jdbc:oracle:thin:@oracle.fiap.com.br:PORTA:SID
+DB_USER=RM******
+DB_PASSWORD=******
 ```
 
-4. **rode a aplicação**
+4. **Importante**
+Para rodar localmente, altere o package da classe principal GsApplication para:
+
+```
+public static void main(String[] args) {
+
+        Dotenv dotenv = Dotenv.configure().load();
+
+        System.setProperty("DB_URL", dotenv.get("DB_URL"));
+        System.setProperty("DB_USER", dotenv.get("DB_USER"));
+        System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+
+        SpringApplication.run(GsApplication.class, args);
+    }
+```
 
 ## 🧠 Links
 
