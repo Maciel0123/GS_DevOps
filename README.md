@@ -115,9 +115,8 @@ POST /login
 1. **Clone o repositório:**
 
 ```bash
-DB_URL=jdbc:oracle:thin:@oracle.fiap.com.br:****:****
-DB_USERNAME=RM******
-DB_PASSWORD=******
+https://github.com/MaryChriss/gs-java1.git
+cd gs-java1
 ```
 
 2. **.env**
