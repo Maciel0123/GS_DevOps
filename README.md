@@ -106,7 +106,6 @@ POST /login
 - Spring Data JPA
 - Spring Security + JWT
 - Spring Validation (Bean Validation)
-- Banco H2
 - Lombok
 - Swagger
 - Oracle
