@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,13 +23,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DispositivoIot {
-    
+
     @Id
     @Column(name = "id_dispositivo")
     private Long idDispositivo;
 
     @NotBlank(message = "campo obrigatório")
-     @Column(name = "identificador", nullable = false, length = 100, unique = true)
+    @Column(name = "identificador", nullable = false, length = 100, unique = true)
     public String identificador;
 
     @NotBlank(message = "campo obrigatório")
@@ -41,12 +42,12 @@ public class DispositivoIot {
     @Column(name = "longitude", precision = 9, scale = 6)
     private BigDecimal longitude;
 
-    @NotBlank(message = "campo obrigatório")
+    @NotNull(message = "campo obrigatório")
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private StatusDispositivo status;
 
     @Column(name = "ultima_conexao")
     private LocalDateTime ultimaConexao;
-    
+
 }
