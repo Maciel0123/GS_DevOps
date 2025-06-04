@@ -31,10 +31,10 @@ http://localhost:8080/dados
 ```
 
 Listar por cidade + salvar no histórico (autenticado)
-GET /dados?cidade=Campinas&idUsuario=19
+GET /dados?cidade=Campinas&idUsuario=1&page=0&size=10
 
 ```
-http://localhost:8080/dados?cidade=Campinas&idUsuario=8&page=0&size=10
+http://localhost:8080/dados?cidade=Campinas&idUsuario=8
 ```
 
 - 💾 Histórico de Pesquisas
@@ -43,7 +43,7 @@ Listar histórico do usuário
 GET /historico/{idUsuario}
 
 ```
-http://localhost:8080/historico/19
+http://localhost:8080/historico/8
 ```
 
 - ⭐ Favoritos
@@ -148,9 +148,9 @@ public static void main(String[] args) {
 
 ## 🧠 Links
 
--Deploy Railway:
+-Deploy Nuvem:
 ```
-gsjava1-production.up.railway.app
+http://191.232.36.235:8080/
 ```
 
 - Swagger
@@ -162,8 +162,6 @@ http://localhost:8080/swagger-ui/index.html#/
 ```
 https://github.com/MaryChriss/gs-mobile1
 ```
-
-- Integração com o front-end
   
 ## 👥 Integrantes
 
