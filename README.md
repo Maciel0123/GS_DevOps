@@ -4,11 +4,11 @@ Sistema inteligente de monitoramento climático com base em dados coletados por 
 
 ## 📋 Descrição da Solução
 
-O ClimaESP permite o monitoramento e consulta de dados climáticos como **temperatura, umidade, chuva, vento** e **descrição do clima**, com base nas cidades pesquisadas pelos usuários.
+O ClimaESP é uma solução tecnológica que permite o monitoramento e a consulta de dados climáticos como temperatura, umidade, chuva, vento etc.., com base nas cidades pesquisadas pelos usuários.
 
-Cada pesquisa por cidade é registrada em um histórico de buscas e pode ser favoritada para consultas futuras. Os dados são coletados por dispositivos **IoT** e armazenados no banco de dados.
+Utilizando dispositivos IoT para coleta em tempo real, os dados são armazenados em um banco de dados e apresentados de forma acessível, contribuindo para a conscientização ambiental, planejamento de atividades e prevenção de riscos climáticos como enchentes ou ondas de calor.
 
-A solução também implementa filtros com Spring Data ExampleMatcher, validação com Bean Validation, autenticação com JWT e documentação Swagger.
+Cada cidade pesquisada é registrada em um histórico e pode ser favoritada, facilitando o acompanhamento contínuo por parte de agricultores, moradores e gestores públicos. O ClimaESP combina tecnologia e boas práticas para ajudar pessoas, proteger o meio ambiente e antecipar problemas causados por mudanças climáticas.
 
 ## Essa API permite:
 
