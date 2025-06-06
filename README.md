@@ -31,7 +31,7 @@ http://localhost:8080/dados
 ```
 
 Listar por cidade + salvar no histórico (autenticado)
-GET /dados?cidade=Campinas&idUsuario=1&page=0&size=10
+GET /dados?cidade=Campinas&idUsuario=8
 
 ```
 http://localhost:8080/dados?cidade=Campinas&idUsuario=8
